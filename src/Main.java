@@ -23,7 +23,7 @@ public class Main {
         book.changeEmployeeData(11, 65000);
         book.changeEmployeeData(11, 4);
         book.printEmployeesByDepartments();
-        book.printEmployeesDate(4);
+        book.printEmployeesData(4);
 
         book.indexingSalary(10);
         System.out.println(book);
