@@ -46,7 +46,11 @@ public class Employee {
     }
 
     public void setDepartment(int department) {
-        this.department = department;
+        if(department > 0 && department <= Employee.DEPARTMENTS_COUNT){
+            this.department = department;
+        } else {
+            throw new IllegalArgumentException("There is no department № " + department);
+        }
     }
 
     public void setSalary(double salary){

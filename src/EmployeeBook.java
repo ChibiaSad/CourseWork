@@ -14,10 +14,10 @@ public class EmployeeBook {
                 return;
             }
         }
-        System.out.println("Not enough place");                 // можно добавить расширение массива если места нет
+        System.out.println("Not enough place");
     }
 
-    public void removeEmployee(int id){                         // не понимаю зачем нужен поиск по ФИО и id, если id уникальный, а ФИО нет
+    public void removeEmployee(int id){
         for (int i = 0; i < book.length; i++) {
             if(id == book[i].getId()){
                 book[i] = null;
@@ -27,16 +27,20 @@ public class EmployeeBook {
         }
     }
 
-    public void changeEmployeeData(int id, int salaryOrDepart){
+    public void setSalary(int id, int salary) {
         for (Employee employee : book) {
-            if (employee.getId() == id) {
-                if(salaryOrDepart > 0 && salaryOrDepart <= Employee.DEPARTMENTS_COUNT){
-                    employee.setDepartment(salaryOrDepart);
-                    System.out.println("Department changed to " + salaryOrDepart);
-                }else {
-                    employee.setSalary(salaryOrDepart);
-                    System.out.println("Salary changed to " + salaryOrDepart);
-                }
+            if (employee != null && employee.getId() == id) {
+                employee.setSalary(salary);
+                System.out.println("Salary changed to " + salary);
+            }
+        }
+    }
+
+    public void setDepartment(int id, int department) {
+        for (Employee employee : book) {
+            if (employee != null && employee.getId() == id) {
+                employee.setDepartment(department);
+                System.out.println("Department changed to " + department);
             }
         }
     }
@@ -121,74 +125,60 @@ public class EmployeeBook {
         return summarySalary(department) / count;
     }
 
-    public Employee minSalaryEmployee(){
-        searchNotNull();
+    public void minSalaryEmployee(){
+        double min = Double.MAX_VALUE;
         for (Employee employee : book) {
             if(employee == null){
                 continue;
             }
-            if(employee.getSalary() < currentEmployee.getSalary()){
+            if(employee.getSalary() < min){
+                min = employee.getSalary();
                 currentEmployee = employee;
             }
         }
-        return currentEmployee;
+        System.out.println("Employee with minimal salary - " + currentEmployee);
     }
 
-    public Employee minSalaryEmployee(int department){
-        searchNotNullInDepartment(department);
+    public void minSalaryEmployee(int department){
+        double min = Double.MAX_VALUE;
         for (Employee employee : book) {
             if(employee == null){
                 continue;
             }
-            if(employee.getDepartment() == department && employee.getSalary() < currentEmployee.getSalary()){
+            if(employee.getDepartment() == department && employee.getSalary() < min){
+                min = employee.getSalary();
                 currentEmployee = employee;
             }
         }
-        return currentEmployee;
+        System.out.println("Employee with minimal salary at department № " + department + " - " + currentEmployee.toString().replaceFirst(" Department: .", ""));
     }
 
-    public Employee maxSalaryEmployee(){
-        searchNotNull();
+    public void maxSalaryEmployee(){
+        double max = Double.MIN_VALUE;
         for (Employee employee : book) {
             if(employee == null){
                 continue;
             }
-            if(employee.getSalary() > currentEmployee.getSalary()){
+            if(employee.getSalary() > max){
+                max = employee.getSalary();
                 currentEmployee = employee;
             }
         }
-        return currentEmployee;
+        System.out.println("Employee with maximum salary - " + currentEmployee);
     }
 
-    public Employee maxSalaryEmployee(int department){
-        searchNotNullInDepartment(department);
+    public void maxSalaryEmployee(int department){
+        double max = Double.MIN_VALUE;
         for (Employee employee : book) {
             if(employee == null){
                 continue;
             }
-            if(employee.getDepartment() == department && employee.getSalary() > currentEmployee.getSalary()){
+            if(employee.getDepartment() == department && employee.getSalary() > max){
+                max = employee.getSalary();
                 currentEmployee = employee;
             }
         }
-        return currentEmployee;
-    }
-
-    private void searchNotNull(){
-        for (Employee employee : book) {
-            if(employee != null){
-                currentEmployee = employee;
-                return;
-            }
-        }
-    }
-
-    private void searchNotNullInDepartment(int department){
-        for (Employee employee : book) {
-            if(employee != null && employee.getDepartment() == department){
-                currentEmployee = employee;
-                return;
-            }
-        }
+        System.out.println("Employee with maximum salary at department № " + department + " - " + currentEmployee.toString().replaceFirst(" Department: .", ""));
     }
 
     public void indexingSalary(double percent){
