@@ -70,7 +70,7 @@ public class EmployeeBook {
         System.out.print(printSeparator());
     }
 
-    public void printEmployeesDate(int department) {
+    public void printEmployeesData(int department) {
         System.out.print(printSeparator());
         System.out.printf("List of employees of department №%d:\n", department);
         for (Employee employee : book) {
